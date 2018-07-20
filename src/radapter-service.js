@@ -22,11 +22,17 @@ class RadapterService {
     }
 
     get(name) {
-        return this._components[name];
+        const component = this._components[name];
+
+        if (!component) {
+            throw new Error(`Component named '${name}' was not found in registry`);
+        }
+
+        return component;
     }
 
     isRegistered(name) {
-        return !!this.get(name);
+        return !!this._components[name];
     }
 }
 

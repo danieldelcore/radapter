@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-const ChildrenWrapper = ({ html }) =>
-    <span dangerouslySetInnerHTML={{ __html: html }} />;
-
 function radapterDirective(radapterRegistry) {
     return {
         restrict: 'E',
@@ -13,28 +10,30 @@ function radapterDirective(radapterRegistry) {
             props: '<',
         },
         link: function (scope, element, attrs, ctrl, transclude) {
-            let children;
+            try {
+                const Component = radapterRegistry.get(scope.component);
 
-            transclude(scope, clone => (
-                children = clone[0].outerHTML
-            ));
-
-            const Component = radapterRegistry.get(scope.component);
-
-            if (!Component) {
-                console.warn('Component not found');
-
-                return;
+                ReactDom.render(
+                    <Component {...scope.props}>
+                        {renderChildren(scope, transclude)}
+                    </Component>,
+                    element[0]
+                );
+            } catch (err) {
+                if (process.env.NODE_ENV === 'development') {
+                    console.warn(err);
+                }
             }
-
-            ReactDom.render(
-                <Component {...scope.props}>
-                    <ChildrenWrapper html={children} />
-                </Component>,
-                element[0]
-            );
         }
     };
+
+    function renderChildren(scope, transclude) {
+        let html;
+
+        transclude(scope, clone => (html = clone[0].outerHTML));
+
+        return <span dangerouslySetInnerHTML={{ __html: html }} />;
+    }
 }
 
 export default radapterDirective;
