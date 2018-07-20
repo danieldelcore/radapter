@@ -1,0 +1,39 @@
+{
+  "name": "radapter",
+  "version": "0.1.0",
+  "description": "Angularjs adapter for React components",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.5.11",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-html-parser": "^2.0.2",
+    "webpack": "^4.12.1",
+    "webpack-cli": "^3.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danieldelcore/radapter.git"
+  },
+  "keywords": [
+    "React",
+    "Angular",
+    "adapter",
+    "component",
+    "directive"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danieldelcore/radapter/issues"
+  },
+  "homepage": "https://github.com/danieldelcore/radapter#readme"
+}
