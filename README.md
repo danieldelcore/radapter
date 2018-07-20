@@ -1,9 +1,8 @@
 # 🦖 rAdapter
 
-rAdapter is a React component adapter for Angularjs applications. It was created to provide a way to avoid having to do an upfront rewrite of your legacy Angularjs applications, and provides a mechanism for you to iteratively replace Angular directives/components with React components.
+rAdapter is a React component adapter for Angularjs applications. Aimed at providing a way to avoid rewriting legacy Angularjs applications upfront, and instead allows iterative replacement of Angular directives and components with React components behind the scenes, until the time is right to remove Angularjs completely.
 
 ![rAdapter being imported into my app](/hero.png "rAdapter being imported into my app")
-
 
 ## Usage
 
@@ -36,7 +35,7 @@ rAdapter is a React component adapter for Angularjs applications. It was created
         <radapter
             component="'Button'"
             props="{
-                handleClick: "handleButtonClick"
+                handleClick: handleButtonClick
             }"
         >
             Press Me!
@@ -44,17 +43,17 @@ rAdapter is a React component adapter for Angularjs applications. It was created
     </div>
 ```
 
-## Component Registry
+## radapterRegistry
 
 **Methods:**
 
-- `radapter.register(name: String, component: ReactComponent)`: Pushes the supplied component into the registry. Will throw if a component of the same name has already been registered.
+- `radapterRegistry.register(name: String, component: ReactComponent)`: Pushes the supplied component into the registry. Will throw if a component of the same name has already been registered.
 
-- `radapter.registerAll([{ name: String, component: ReactComponent }])`: Convenance method for registering many components
+- `radapterRegistry.registerAll([{ name: String, component: ReactComponent }])`: Convenience method for registering multiple components
 
-- `radapter.get(name)`: Fetches a component from the registry
+- `radapterRegistry.get(name)`: Fetches a component from the registry. Will throw if the component is not registered
 
-- `radapter.isRegistered(name):` Checks if the supplied component has been registered
+- `radapterRegistry.isRegistered(name):` Checks if the supplied component has been registered
 
 ## `<radapter> `
 
@@ -74,10 +73,10 @@ The directive which pulls the requested component from the registry and renders 
     component="'Button'"
     props="{
         subject: "'I ❤️ React'"
-        handleClick: "handleButtonClick",
+        handleClick: handleButtonClick,
     }"
 />
 ```
 
 ## Caveats
-rAdapter is limited in it's ability to handle children elements. Currently it only supports plain HTML elements, which are injected into the component via [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml). Please read and understand the implication of `dangerouslySetInnerHTML` before using this component.
+rAdapter is limited in it's ability to handle children elements. Currently it only supports plain HTML elements, which are injected into the component via [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml). Please read and understand the implications of `dangerouslySetInnerHTML` before using this component.
