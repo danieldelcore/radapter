@@ -1,1 +1,3 @@
-export { default as radapter } from './src/radapter-module.js';
+import radapter from './src/radapter-module';
+
+export default radapter;
