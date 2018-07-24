@@ -15,10 +15,10 @@ class RadapterService {
         this._components[name] = component;
     }
 
-    registerAll(components = []) {
-        components.forEach(({ name, component }) =>
-            this.register(name, component)
-        );
+    registerAll(components = {}) {
+        Object
+            .keys(components)
+            .forEach(key => this.register(key, components[key]));
     }
 
     get(name) {

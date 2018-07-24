@@ -49,7 +49,7 @@ rAdapter is a React component adapter for Angularjs applications. Aimed at provi
 
 - `radapterRegistry.register(name: String, component: ReactComponent)`: Pushes the supplied component into the registry. Will throw if a component of the same name has already been registered.
 
-- `radapterRegistry.registerAll([{ name: String, component: ReactComponent }])`: Convenience method for registering multiple components
+- `radapterRegistry.registerAll({ MyComp: MyReactComponent }])`: Convenience method for registering multiple components
 
 - `radapterRegistry.get(name)`: Fetches a component from the registry. Will throw if the component is not registered
 

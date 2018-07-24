@@ -4,6 +4,10 @@
     "plugins": [
         "jest"
     ],
+    "globals": {
+        "angular": true,
+        "inject": true
+    },
     "env": {
         "jest/globals": true
     },
@@ -21,6 +25,15 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/jsx-indent": [1, 4],
         "react/jsx-indent-props": [1, 4],
-        "react/require-default-props": [0]
+        "react/require-default-props": [0],
+        "import/no-extraneous-dependencies": [
+            "off",
+            {
+                "devDependencies": [
+                    "**/*.test.js",
+                    "**/*.spec.js"
+                ]
+            }
+        ]
     }
 }
