@@ -2,7 +2,7 @@
   "name": "radapter",
   "version": "0.2.1",
   "description": "React component adapter for legacy Angularjs apps",
-  "main": "./dist/index.js",
+  "main": "./dist/main.js",
   "author": "Daniel Del Core",
   "license": "MIT",
   "scripts": {
