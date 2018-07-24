@@ -4,14 +4,16 @@ module.exports = {
     output: {
         library: 'radapter',
         libraryTarget: 'umd',
+        libraryExport: 'default',
     },
     module: {
         rules: [{
             test: /\.js$/,
             exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-            },
+            use: [
+                { loader: 'ng-annotate-loader' },
+                { loader: 'babel-loader' },
+            ],
         }],
     },
     externals: [

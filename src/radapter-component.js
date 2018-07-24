@@ -1,6 +1,5 @@
 /* eslint-disable react/no-danger */
 
-import angular from 'angular';
 import React from 'react';
 import ReactDom from 'react-dom';
 

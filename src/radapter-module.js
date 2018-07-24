@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 import './radapter-component';
 import './radapter-service';
 

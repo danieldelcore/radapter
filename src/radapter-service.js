@@ -1,5 +1,7 @@
 class RadapterService {
     constructor() {
+        'inInject';
+
         this._components = {};
     }
 
