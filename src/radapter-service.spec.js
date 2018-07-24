@@ -41,7 +41,7 @@ describe('RadapterService', () => {
 
     it('throws when unknown component is requested', () => {
         expect(() => {
-            radapterRegistry.get('unknown')
+            radapterRegistry.get('unknown');
         }).toThrow('Component named \'unknown\' was not found in registry');
     });
 

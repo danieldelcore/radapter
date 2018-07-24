@@ -10,11 +10,7 @@ function compileDirective($compile, scope, tpl) {
     return compiledElement;
 }
 
-const MyButton = ({
-    type,
-    handleClick = () => {},
-    children,
-}) => (
+const MyButton = ({ type, handleClick = () => {}, children }) => (
     <button type={type} onClick={handleClick()}>
         {children}
     </button>
@@ -26,7 +22,7 @@ MyButton.propTypes = {
     children: PropTypes.element,
 };
 
-describe('radapterDirective', () => {
+describe('radapterComponent', () => {
     let $compile;
     let element;
     let $scope;
@@ -87,8 +83,8 @@ describe('radapterDirective', () => {
         const template = `
             <radapter
                 component="component"
-                props="props">
-                <p>Hello Button</p>
+                props="props"
+                children="'<p>Hello Button</p>'">
             </radapter>
         `;
 
@@ -101,7 +97,31 @@ describe('radapterDirective', () => {
     });
 
     it('handles updates to children', () => {
-        // TODO: ...
+        $scope.children = '<p>Hello Button</p>';
+
+        const template = `
+            <radapter
+                component="component"
+                props="props"
+                children="children">
+            </radapter>
+        `;
+
+        element = compileDirective($compile, $scope, template);
+
+        let button = element.find('button');
+
+        expect(element[0].children.length).toEqual(1);
+        expect(button.find('p').text()).toEqual('Hello Button');
+
+
+        button = element.find('button');
+
+        $scope.children = '<p>NEW Button</p>';
+        $scope.$digest();
+
+        expect(element[0].children.length).toEqual(1);
+        expect(button.find('p').text()).toEqual('NEW Button');
     });
 
     it('doesnt render any elements if the component is not found', () => {
@@ -110,8 +130,9 @@ describe('radapterDirective', () => {
         });
 
         const template = `
-            <radapter component="component">
-                <p>Hello Button</p>
+            <radapter
+                component="component"
+                children="'<p>Hello Button</p>'">
             </radapter>
         `;
 

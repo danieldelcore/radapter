@@ -1,9 +1,10 @@
 import angular from 'angular';
 
-import RadapterService from './radapter-service';
-import radapterDirective from './radapter-directive';
+import './radapter-component';
+import './radapter-service';
 
 export default angular
-    .module('radapter', [])
-    .service('radapterRegistry', RadapterService)
-    .directive('radapter', radapterDirective);
+    .module('radapter', [
+        'radapter-component',
+        'radapter-service',
+    ]);

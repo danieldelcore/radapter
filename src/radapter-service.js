@@ -36,4 +36,6 @@ class RadapterService {
     }
 }
 
-export default RadapterService;
+export default angular
+    .module('radapter-service', [])
+    .service('radapterRegistry', RadapterService);
