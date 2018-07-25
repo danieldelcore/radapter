@@ -5,6 +5,8 @@ import ReactDom from 'react-dom';
 
 class RadapterController {
     constructor($element, radapterRegistry) {
+        'ngInject';
+
         this._$element = $element;
         this._radapterRegistry = radapterRegistry;
     }
