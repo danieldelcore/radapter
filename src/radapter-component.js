@@ -11,11 +11,7 @@ class RadapterController {
         this._radapterRegistry = radapterRegistry;
     }
 
-    $onChanges({ component, props, children }) {
-        this.children = children && children.currentValue;
-        this.component = component && component.currentValue;
-        this.props = props && props.currentValue;
-
+    $onChanges() {
         this._handleChange();
     }
 
