@@ -14,68 +14,25 @@ rAdapter is a React component adapter for Angularjs applications. Aimed at provi
 
 ```jsx
     import radapter from 'radapter';
-    import { MyCoolTextBox, MyCoolButton } from './my-react-components';
+    import { MyTextBox, MyButton } from './my-react-components';
 
     // your application
-    angular.module('my-cool-app', [
-        radapter
-    ])
-    .controller('MyCoolController', function($scope, radapterRegistry) {
-        radapterRegistry.register('TextBox', MyCoolTextBox);
-        radapterRegistry.register('Button', MyCoolButton);
-
-        $scope.handleButtonClick = function() {
-            console.log('wow my react button was pressed');
-        }
-    });
+    angular
+        .module('my-cool-app', [radapter])
+        .component('myTextBox', radapter(MyTextBox))
+        .component('myButton', radapter(MyButton));
 
     // In your templates
-    <div ng-controller="MyCoolController">
-        Hello, World! Checkout my React component!
-        <radapter
-            component="'Button'"
-            props="{
-                handleClick: handleButtonClick
-            }"
-        >
-            Press Me!
-        </radapter>
-    </div>
-```
+    <my-text-box
+        class-name="textbox"
+        children="'<p>Hello, World! Checkout my React component!</p>'">
+    </my-text-box>
 
-## radapterRegistry
-
-**Methods:**
-
-- `radapterRegistry.register(name: String, component: ReactComponent)`: Pushes the supplied component into the registry. Will throw if a component of the same name has already been registered.
-
-- `radapterRegistry.registerAll({ MyComp: MyReactComponent }])`: Convenience method for registering multiple components
-
-- `radapterRegistry.get(name)`: Fetches a component from the registry. Will throw if the component is not registered
-
-- `radapterRegistry.isRegistered(name):` Checks if the supplied component has been registered
-
-## `<radapter> `
-
-The directive which pulls the requested component from the registry and renders it to the page.
-
-**Props:**
-
-- `component` (String):  Name of the component you wish to render
-
-```jsx
- <radapter component="'Button'" />
-```
-- `props` (Object):  Object containing the props to be passed into the component
-
-```jsx
-<radapter
-    component="'Button'"
-    props="{
-        subject: "'I ❤️ React'"
-        handleClick: handleButtonClick,
-    }"
-/>
+    <my-button
+        type="button"
+        onClick="$ctrl.handleClick"
+        children="'Press me!'">
+    </my-button>
 ```
 
 ## Caveats

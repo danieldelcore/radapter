@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function compileDirective($compile, scope, tpl) {
-    const template = tpl || '<radapter component="component" props="props"></radapter>';
-    const compiledElement = $compile(template)(scope);
+function compileDirective($compile, $scope, tpl) {
+    const defaultTemplate = `
+        <my-button
+            type="type"
+            handle-click="handleClick"
+            children="children">
+        </my-button>
+    `;
 
-    scope.$digest();
+    const compiledElement = $compile(tpl || defaultTemplate)($scope);
+
+    $scope.$digest();
 
     return compiledElement;
 }
@@ -22,34 +29,35 @@ MyButton.propTypes = {
     children: PropTypes.element,
 };
 
-describe('radapterComponent', () => {
+describe('radapterModule', () => {
     let $compile;
-    let element;
     let $scope;
+    let compileProvider;
+    let element;
     let handleClick;
-    let radapterRegistry;
+    let radapter;
 
     beforeEach(() => {
         angular.mock.module('radapter');
+        angular.mock.module(($compileProvider) => {
+            compileProvider = $compileProvider;
+        });
 
         inject(($injector) => {
             $compile = $injector.get('$compile');
-            radapterRegistry = $injector.get('radapterRegistry');
             $scope = $injector.get('$rootScope').$new();
+            radapter = $injector.get('radapter');
         });
-
-        jest.spyOn(radapterRegistry, 'get').mockReturnValue(MyButton);
 
         handleClick = jest.fn();
 
-        $scope.component = MyButton;
-        $scope.props = {
-            type: 'button',
-            handleClick,
-        };
+        $scope.type = 'button';
+        $scope.handleClick = handleClick;
+        $scope.children = '<p>Hello Button</p>';
     });
 
     it('renders the component in React', () => {
+        compileProvider.component('myButton', radapter(MyButton));
         element = compileDirective($compile, $scope);
 
         const button = element.find('button');
@@ -61,6 +69,7 @@ describe('radapterComponent', () => {
     });
 
     it('handles prop changes', () => {
+        compileProvider.component('myButton', radapter(MyButton));
         element = compileDirective($compile, $scope);
 
         const button = element.find('button');
@@ -70,9 +79,7 @@ describe('radapterComponent', () => {
         expect(handleClick).toHaveBeenCalled();
         expect(button.attr('type')).toEqual('button');
 
-        $scope.props = {
-            type: 'submit',
-        };
+        $scope.type = 'submit';
 
         $scope.$digest();
 
@@ -80,15 +87,8 @@ describe('radapterComponent', () => {
     });
 
     it('renders component with children', () => {
-        const template = `
-            <radapter
-                component="component"
-                props="props"
-                children="'<p>Hello Button</p>'">
-            </radapter>
-        `;
-
-        element = compileDirective($compile, $scope, template);
+        compileProvider.component('myButton', radapter(MyButton));
+        element = compileDirective($compile, $scope);
 
         const button = element.find('button');
 
@@ -97,17 +97,8 @@ describe('radapterComponent', () => {
     });
 
     it('handles updates to children', () => {
-        $scope.children = '<p>Hello Button</p>';
-
-        const template = `
-            <radapter
-                component="component"
-                props="props"
-                children="children">
-            </radapter>
-        `;
-
-        element = compileDirective($compile, $scope, template);
+        compileProvider.component('myButton', radapter(MyButton));
+        element = compileDirective($compile, $scope);
 
         let button = element.find('button');
 
@@ -122,22 +113,5 @@ describe('radapterComponent', () => {
 
         expect(element[0].children.length).toEqual(1);
         expect(button.find('p').text()).toEqual('NEW Button');
-    });
-
-    it('doesnt render any elements if the component is not found', () => {
-        radapterRegistry.get.mockImplementation(() => {
-            throw new Error();
-        });
-
-        const template = `
-            <radapter
-                component="component"
-                children="'<p>Hello Button</p>'">
-            </radapter>
-        `;
-
-        element = compileDirective($compile, $scope, template);
-
-        expect(element[0].children.length).toEqual(0);
     });
 });
