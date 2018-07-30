@@ -1,8 +1,6 @@
-import './radapter-component';
-import './radapter-service';
+import './radapter-factory';
 
 export default angular
     .module('radapter', [
-        'radapter-component',
-        'radapter-service',
+        'radapter-factory',
     ]);
