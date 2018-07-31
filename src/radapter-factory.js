@@ -14,30 +14,24 @@ function generateBindings(propTypes = {}) {
         }, {});
 }
 
-function radapterFactory() {
-    return (Component) => {
-        const bindings = {
-            ...generateBindings(Component.propTypes),
-            children: '<',
-        };
+export default function radapterFactory(Component) {
+    const bindings = {
+        ...generateBindings(Component.propTypes),
+        children: '<',
+    };
 
-        const bindingKeys = Object.keys(bindings);
+    const bindingKeys = Object.keys(bindings);
 
-        return {
-            bindings,
-            controller: [
-                '$element',
-                $element => new RadapterController(
-                    $element,
-                    ReactDom,
-                    bindingKeys,
-                    Component
-                ),
-            ],
-        };
+    return {
+        bindings,
+        controller: [
+            '$element',
+            $element => new RadapterController(
+                $element,
+                ReactDom,
+                bindingKeys,
+                Component
+            ),
+        ],
     };
 }
-
-export default angular
-    .module('radapter-factory', [])
-    .factory('radapter', radapterFactory);

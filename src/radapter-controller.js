@@ -15,7 +15,6 @@ export default class RadapterController {
     $onChanges() {
         const props = this._getProps(this._bindings);
         const children = this._renderChildren(this.children);
-
         const Component = this._renderComponent(this._Component, props, children);
 
         this._renderer.render(Component, this._$element[0]);

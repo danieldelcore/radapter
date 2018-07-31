@@ -1,7 +1,7 @@
 import 'angular';
 import 'angular-mocks';
 
-import './src/radapter-module';
+import './';
 
 beforeAll(() => {
     expect.hasAssertions();

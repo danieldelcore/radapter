@@ -1,3 +1,3 @@
-import radapter from './src/radapter-module';
+import radapter from './src/radapter-factory';
 
 export default radapter;
