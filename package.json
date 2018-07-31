@@ -1,6 +1,6 @@
 {
   "name": "radapter",
-  "version": "0.3.3",
+  "version": "1.0.0",
   "description": "React component adapter for legacy Angularjs apps",
   "main": "./dist/main.js",
   "author": "Daniel Del Core",
