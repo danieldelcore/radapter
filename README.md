@@ -10,7 +10,7 @@ rAdapter is a React component adapter for Angularjs applications. Aimed at provi
 
 `npm install radapter`
 
-**Importing:**
+**Example:**
 
 ```jsx
     import radapter from 'radapter';
