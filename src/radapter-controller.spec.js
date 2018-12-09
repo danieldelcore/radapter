@@ -1,20 +1,17 @@
-/* eslint-disable import/first */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import RadapterController from './radapter-controller';
 
-const MyButton = ({ type, handleClick = () => { }, children }) => (
+const MyButton = ({ type, handleClick = () => { } }) => (
     <button type={type} onClick={handleClick()}>
-        {children}
+        Submit
     </button>
 );
 
 MyButton.propTypes = {
     type: PropTypes.string,
     handleClick: PropTypes.func,
-    children: PropTypes.element,
 };
 
 describe('RadapterController', () => {
@@ -35,7 +32,7 @@ describe('RadapterController', () => {
         ];
 
         element = angular.element('<div></div>');
-        controller = new RadapterController(element, renderer, bindings, MyButton);
+        controller = new RadapterController(element, renderer, bindings, undefined, MyButton);
     });
 
     it('detects changes and triggers a rerender', () => {

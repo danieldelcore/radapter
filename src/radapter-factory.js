@@ -2,34 +2,44 @@ import ReactDom from 'react-dom';
 
 import RadapterController from './radapter-controller';
 
-function generateBindings(propTypes = {}) {
-    return Object
-        .keys(propTypes)
-        .reduce((accum, key) => {
-            const props = { ...accum };
+function applyOneWayBinding(props) {
+    return props.reduce((accum, prop) => {
+        const bindings = { ...accum };
 
-            props[key] = '<';
+        bindings[prop] = '<';
 
-            return props;
-        }, {});
+        return bindings;
+    }, {});
 }
 
-export default function radapterFactory(Component) {
-    const bindings = {
-        ...generateBindings(Component.propTypes),
-        children: '<',
-    };
+function getBindings(Component, manualProps, defaultProps) {
+    if (Component.propTypes) {
+        return Object.keys(Component.propTypes);
+    }
 
-    const bindingKeys = Object.keys(bindings);
+    return [
+        ...manualProps,
+        ...Object.keys(defaultProps),
+    ];
+}
+
+export default function radapter(Component, { manualProps = [], defaultProps = {} } = {}) {
+    const bindings = getBindings(Component, manualProps, defaultProps);
+    const bindingTypes = applyOneWayBinding(bindings);
 
     return {
-        bindings,
+        bindings: bindingTypes,
+        scope: bindingTypes,
+        restrict: 'E',
+        bindToController: true,
+        controllerAs: '$ctrl',
         controller: [
             '$element',
             $element => new RadapterController(
                 $element,
                 ReactDom,
-                bindingKeys,
+                bindings,
+                defaultProps,
                 Component
             ),
         ],
