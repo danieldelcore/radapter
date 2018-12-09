@@ -11,8 +11,8 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/,
             use: [
-                { loader: 'ng-annotate-loader' },
-                { loader: 'babel-loader' },
+                'ng-annotate-loader',
+                'babel-loader',
             ],
         }],
     },
@@ -21,4 +21,5 @@ module.exports = {
         'react-dom',
         'angular',
     ],
+    devtool: 'source-map',
 };

@@ -1,4 +1,4 @@
-# 🦖 rAdapter
+# rAdapter
 
 rAdapter is a React component adapter for Angularjs applications. Aimed at providing a way to avoid rewriting legacy Angularjs applications upfront, and instead allows iterative replacement of Angular directives and components with React components behind the scenes, until the time is right to remove Angularjs completely.
 
